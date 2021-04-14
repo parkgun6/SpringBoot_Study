@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/layout1.html :: setMain(~{this :: #my})}">
+
+    <div id="my">
+        <h2>My Page</h2>
+    </div>
+
+</th:block>

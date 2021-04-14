@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <ul>
+        <th:block th:each="dto : ${list}">
+            <li>[[${dto}]] -- [[${#temporals.format(dto.regTime,'yyyy/MM/dd')}]]</li>
+        </th:block>
+    </ul>
+
+    <script th:inline="javascript">
+
+        var list = [[${list}]]
+
+        console.log(list)
+        console.log(list[0].sno)
+
+    </script>
+
+</body>
+</html>
