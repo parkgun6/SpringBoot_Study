@@ -25,4 +25,12 @@ public class Board extends BaseEntity{
     @ManyToOne (fetch = FetchType.LAZY)
     private Member writer;
 
+    //Entity는 완벽한 ReadOnly가 아니다.
+    public void changeTitle(String title){
+        this.title = title;
+    }
+
+    public void changeContent(String content){
+        this.content = content;
+    }
 }

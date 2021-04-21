@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 abstract  class BaseEntity {
 
     @CreatedDate
+    //updateable = false로 regDate는 최초생성 이외에 불변이다.
     @Column(name="regdate" , updatable = false)
     private LocalDateTime regDate;
 
