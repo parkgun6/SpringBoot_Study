@@ -46,6 +46,20 @@ public class BoardRepositoryTests {
     }
 
     @Test
+    public void testReadWithCount() {
+
+        Long bno = 100L;
+
+        Object result = boardRepository.getBoardByBno(bno);
+
+        log.info(result);
+
+        Object[] arr = (Object[]) result;
+
+        log.info(Arrays.toString(arr));
+    }
+
+    @Test
     public void testRead() {
 
         Optional<Board> result = boardRepository.findById(100L);
