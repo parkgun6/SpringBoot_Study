@@ -23,6 +23,16 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
             ,
             countQuery = "select count(b) from Board b")
     //count의 성능을 높여주기 위해서 countQuery를 따로 만들어준다.
-    //Pageable이기 때문에 Page타입으로 리턴한다. 파라미터는 Object[]을 준다.
+    //Pageable이기 때문에 Page타입으로 리턴한다.
+    //여러개의 row를 가져오기 때문에 Object[]을 준다.
     Page<Object[]> getBoardWithReplyCount(Pageable pageable);
+
+
+    @Query(value = "select b, w, count(r) from Board b " +
+            "inner join b.writer w " +
+            "left join Reply r on r.board = b " +
+            "where b.bno = :bno " +
+            "group by b")
+    //한 개의 row만 가져오기 때문에 Object 타입으로 받는다.
+    Object getBoardByBno(Long bno);
 }

@@ -14,6 +14,12 @@ public interface BoardService {
 
     PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+    BoardDTO get(Long bno);
+
+    void modify(BoardDTO dto);
+
+    void removeWithReplies(Long bno);
+
     default Board dtoTOEntity(BoardDTO dto){
         Member writer = Member.builder().email(dto.getWriterEmail()).build();
 
