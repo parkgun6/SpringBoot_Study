@@ -36,4 +36,10 @@ public class ReplyRepositoryTests {
 
     }
 
+    @Test
+    public void testGetBoardReply(){
+        Long bno = 100L;
+
+        log.warn(replyRepository.getBoardReply(bno));
+    }
 }

@@ -1,5 +1,7 @@
 package org.zerock.board.repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Member;
+import org.zerock.board.entity.QBoard;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -87,5 +90,27 @@ public class BoardRepositoryTests {
         result.get().forEach(arr -> log.info(Arrays.toString(arr)));
 
     }
+
+    @Test
+    public void testSearch(){
+
+        boardRepository.search1();
+    }
+
+    @Test
+    public void testSearchPage(){
+
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+
+        String type = "tcw";
+        String keyword = "10";
+
+        Page<Object[]> result = boardRepository.searchPage(type, keyword, pageable);
+
+        log.info(result);
+
+        result.get().forEach(arr -> log.info(Arrays.toString(arr)));
+    }
+
 
 }

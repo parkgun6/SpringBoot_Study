@@ -5,8 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.zerock.board.entity.Board;
+import org.zerock.board.repository.search.SearchBoardRepository;
 
-public interface BoardRepository extends JpaRepository<Board,Long> {
+public interface BoardRepository extends JpaRepository<Board,Long>, SearchBoardRepository {
 
 //    //myBatis는 #{}을 쓰고 JPQL은 :를 쓴다.
 //    @Query("select b, count(r) from Board b left join Reply r on r.board = b " +
