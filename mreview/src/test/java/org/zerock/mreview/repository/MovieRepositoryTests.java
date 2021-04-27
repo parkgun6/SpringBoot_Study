@@ -63,7 +63,7 @@ public class MovieRepositoryTests {
     @Test
     public void testList1(){
 
-        Pageable pageable = PageRequest.of(1,10, Sort.by("mno").descending());
+        Pageable pageable = PageRequest.of(0,10, Sort.by("mno").descending());
 
         Page<Object[]> result = movieRepository.getListPage(pageable);
 

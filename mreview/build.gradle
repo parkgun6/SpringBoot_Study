@@ -32,7 +32,7 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    /*extras 추가*/
+    /*tymeleaf extras 추가*/
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
 
     /*querydsl 추가*/
@@ -41,6 +41,11 @@ dependencies {
     /*테스트환경에서 Log4j2 사용*/
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+
+    /* 썸네일 추가 */
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.14'
+
 }
 
 test {

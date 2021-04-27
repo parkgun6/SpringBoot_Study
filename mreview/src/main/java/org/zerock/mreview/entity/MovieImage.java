@@ -27,4 +27,8 @@ public class MovieImage {
     
     //대표사진
     private boolean profile;
+
+    public void confirmProfile(boolean value){
+        this.profile = value;
+    }
 }
