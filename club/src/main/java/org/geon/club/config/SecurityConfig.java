@@ -1,6 +1,7 @@
 package org.geon.club.config;
 
 import lombok.extern.log4j.Log4j2;
+import org.geon.club.security.handler.ClubLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,13 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user00")
-                .password("$2a$10$8u40GAoOik6OvAUDZack9uzImuk2IAL7GODXYsByEK9Hfd9KuIKWe")
-                .roles("USER");
-    }
+    //ClubUserDetailsService를 스프링부트가 별도의 설정없이 자동으로 인식한다.
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("user00")
+//                .password("$2a$10$8u40GAoOik6OvAUDZack9uzImuk2IAL7GODXYsByEK9Hfd9KuIKWe")
+//                .roles("USER");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,6 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin();
         http.csrf().disable();
         http.logout();
+        //구글 소셜로그인
+        http.oauth2Login().successHandler(successHandler());
 
+    }
+
+    @Bean
+    public ClubLoginSuccessHandler successHandler(){
+        return new ClubLoginSuccessHandler(passwordEncoder());
     }
 }
