@@ -1,7 +1,11 @@
 package org.geon.club.config;
 
 import lombok.extern.log4j.Log4j2;
+import org.geon.club.security.filter.ApiCheckFilter;
+import org.geon.club.security.filter.ApiLoginFilter;
+import org.geon.club.security.handler.ApiLoginFailHandler;
 import org.geon.club.security.handler.ClubLoginSuccessHandler;
+import org.geon.club.util.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @Log4j2
@@ -48,10 +53,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //구글 소셜로그인
         http.oauth2Login().successHandler(successHandler());
 
+        http.addFilterBefore(apiCheckFilter(),
+                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiLoginFilter(),
+                UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     public ClubLoginSuccessHandler successHandler(){
         return new ClubLoginSuccessHandler(passwordEncoder());
     }
+
+    @Bean
+    public ApiLoginFilter apiLoginFilter()throws Exception{
+
+        ApiLoginFilter apiLoginFilter =
+                new ApiLoginFilter("/api/login",jwtUtil());
+
+        apiLoginFilter.setAuthenticationManager(authenticationManager());
+
+        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
+
+        return apiLoginFilter;
+    }
+
+    @Bean
+    public ApiCheckFilter apiCheckFilter(){
+        return new ApiCheckFilter("/notes/**/*",jwtUtil());
+    }
+
+    @Bean
+    public JWTUtil jwtUtil(){
+        return new JWTUtil();
+    }
+
 }
